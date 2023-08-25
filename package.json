@@ -1,0 +1,42 @@
+{
+  "name": "postgresql-backup-package",
+  "license": "Apache-2.0",
+  "version": "1.0.0",
+  "author": "",
+  "type": "module",
+  "bin": {
+    "postgresql-backup": "./bin/postgresql-backup.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^20.5.4",
+    "@types/yargs": "^17.0.24",
+    "@typescript-eslint/eslint-plugin": "^6.1.0",
+    "esbuild": "^0.19.2",
+    "esbuild-plugin-tsc": "^0.4.0",
+    "eslint-config-standard-with-typescript": "^38.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
+    "eslint-plugin-promise": "^6.0.0",
+    "pkg": "^5.8.1",
+    "ts-node": "^10.9.1",
+    "tsc": "^2.0.4",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@google-cloud/storage": "^7.0.1",
+    "compression": "^1.7.4",
+    "dotenv": "^16.3.1",
+    "eslint": "^8.0.1",
+    "execa": "^8.0.1",
+    "yargs": "^17.7.2"
+  },
+  "scripts": {
+    "start": "yarn ts-node ./index.ts",
+    "check": "yarn tsc -noEmit ./index.ts",
+    "bundle": "node bundle.js",
+    "bundle-full": "yarn bundle && yarn pkg ./bin/postgresql-backup.mjs",
+    "completion": "./bin/postgresql-backup.mjs completion > ./bin/_postgresql-backup",
+    "completion-install": "./bin/postgresql-backup.mjs completion > ~/.oh-my-zsh/completions/_postgresql-backup",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
