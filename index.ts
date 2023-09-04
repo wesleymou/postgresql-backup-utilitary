@@ -42,6 +42,12 @@ import { Storage } from '@google-cloud/storage';
               alias: 'o',
               type: 'string',
             })
+            .option('prefix', {
+              describe: 'The prefix to filename.',
+              alias: '-',
+              type: 'string',
+              default: '',
+            })
             .option('gcp', {
               describe: 'Send backup to Google Cloud Platform.',
               alias: 'g',
@@ -82,6 +88,7 @@ import { Storage } from '@google-cloud/storage';
       env: envFilePath,
       noEnv: noEnvLoading,
       askPassword,
+      prefix,
       gcp,
       output,
       filename,
@@ -116,7 +123,8 @@ import { Storage } from '@google-cloud/storage';
     const { stdout: databaseContent } =
       await $`pg_dump -h ${c.DB_HOST} -p ${c.DB_PORT} -U ${c.DB_USER} -w -F p ${c.DB_DATABASE}`;
 
-    const dumpFilename = `dump-pg-${new Date().toISOString().slice(0, -5).replace(/T|:/g, '-')}.sql.gz`;
+    const dumpFilename =
+      (prefix ? `${prefix}-` : '') + `dump-pg-${new Date().toISOString().slice(0, -5).replace(/T|:/g, '-')}.sql.gz`;
 
     if (output) {
       const source = Readable.from([databaseContent]);

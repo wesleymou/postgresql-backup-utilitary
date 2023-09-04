@@ -52776,6 +52776,11 @@ import { access, writeFile as writeFile2 } from "node:fs/promises";
         describe: "The output path.",
         alias: "o",
         type: "string"
+      }).option("prefix", {
+        describe: "The prefix to filename.",
+        alias: "-",
+        type: "string",
+        default: ""
       }).option("gcp", {
         describe: "Send backup to Google Cloud Platform.",
         alias: "g",
@@ -52808,6 +52813,7 @@ import { access, writeFile as writeFile2 } from "node:fs/promises";
       env: envFilePath,
       noEnv: noEnvLoading,
       askPassword,
+      prefix,
       gcp,
       output,
       filename,
@@ -52834,7 +52840,7 @@ import { access, writeFile as writeFile2 } from "node:fs/promises";
     checkRequiredEnv(c);
     process.env.PGPASSWORD = c.DB_PASSWORD;
     const { stdout: databaseContent } = await $`pg_dump -h ${c.DB_HOST} -p ${c.DB_PORT} -U ${c.DB_USER} -w -F p ${c.DB_DATABASE}`;
-    const dumpFilename = `dump-pg-${(/* @__PURE__ */ new Date()).toISOString().slice(0, -5).replace(/T|:/g, "-")}.sql.gz`;
+    const dumpFilename = (prefix ? `${prefix}-` : "") + `dump-pg-${(/* @__PURE__ */ new Date()).toISOString().slice(0, -5).replace(/T|:/g, "-")}.sql.gz`;
     if (output) {
       const source = Readable.from([databaseContent]);
       const outputPath = join(output, dumpFilename);
