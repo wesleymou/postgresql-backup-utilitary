@@ -34,7 +34,9 @@
     "start": "yarn ts-node ./index.ts",
     "check": "yarn tsc -noEmit ./index.ts",
     "bundle": "node bundle.js",
+    "bundle-lib": "node bundle-lib.js",
     "bundle-full": "yarn bundle && yarn pkg ./bin/postgresql-backup.mjs",
+    "bundle-full-lib": "yarn bundle-lib && yarn pkg ./dist/postgresql-backup-lib.mjs",
     "completion": "./bin/postgresql-backup.mjs completion > ./bin/_postgresql-backup",
     "completion-install": "./bin/postgresql-backup.mjs completion > ~/.oh-my-zsh/completions/_postgresql-backup",
     "test": "echo \"Error: no test specified\" && exit 1"
