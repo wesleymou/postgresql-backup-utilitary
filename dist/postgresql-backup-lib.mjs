@@ -47953,7 +47953,7 @@ function exitSuccess(message) {
 }
 function exitError(error) {
   console.error("An error occurred:", error);
-  process.exit(error && error.code || 1);
+  process.exit((error && error.code) > 0 ? error.code : 1);
 }
 async function askForPassword() {
   const reader = createInterface({
